@@ -1,2 +1,757 @@
 # Suddh-sattu
-This is the website jisme dekhlo
+
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shudhh Sattu | Pure Energy from Tradition</title>
+    <meta name="description" content="Buy Sattu Online - Shudhh Sattu. High Protein, 100% Natural, Traditional Indian Superfood. Available in 1kg and 500g packs.">
+    <meta name="keywords" content="Buy Sattu Online, High Protein Sattu, Pure Sattu 1kg Price, Roasted Gram Flour, Indian Superfood, Sattu Drink">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Phosphor Icons (Lightweight Icon Library) -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <!-- Tailwind Config for Custom Colors -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            light: '#F9F5F0', // Creamy background
+                            DEFAULT: '#8B5A2B', // Roasted Brown
+                            dark: '#5D3A1A',
+                            green: '#4A7C59', // Earthy Green for health/success
+                            accent: '#E8A735', // Golden for ratings/highlights
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Styles & Animations */
+        body {
+            background-color: #FDFBF7;
+            color: #1F2937;
+        }
+        
+        .hero-pattern {
+            background-image: radial-gradient(#8B5A2B 0.5px, transparent 0.5px), radial-gradient(#8B5A2B 0.5px, #FDFBF7 0.5px);
+            background-size: 20px 20px;
+            background-position: 0 0, 10px 10px;
+            opacity: 0.1;
+        }
+
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        /* Hide scrollbar for clean horizontal scroll if needed */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .loader {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #8B5A2B;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="antialiased font-sans">
+
+    <!-- Free Delivery Banner -->
+    <div class="bg-brand-dark text-white text-xs md:text-sm text-center py-2 font-medium tracking-wide">
+        FREE DELIVERY on orders above ₹299 | Use Code: <span class="font-bold text-brand-accent">PURE10</span> for 10% Off
+    </div>
+
+    <!-- Navigation -->
+    <nav class="glass-nav sticky top-0 z-50 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16 md:h-20">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center cursor-pointer" onclick="window.scrollTo(0,0)">
+                    <i class="ph-fill ph-grains text-brand text-3xl mr-2"></i>
+                    <div>
+                        <h1 class="font-serif text-2xl font-bold text-brand-dark tracking-tight">Shudhh<span class="text-brand-green">Sattu</span></h1>
+                        <p class="text-[0.6rem] text-gray-500 uppercase tracking-widest -mt-1">Pure Tradition</p>
+                    </div>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="#home" class="text-gray-700 hover:text-brand font-medium transition">Home</a>
+                    <a href="#shop" class="text-gray-700 hover:text-brand font-medium transition">Shop</a>
+                    <a href="#benefits" class="text-gray-700 hover:text-brand font-medium transition">Benefits</a>
+                    <a href="#about" class="text-gray-700 hover:text-brand font-medium transition">Story</a>
+                    <a href="#contact" class="text-gray-700 hover:text-brand font-medium transition">Contact</a>
+                </div>
+
+                <!-- Icons -->
+                <div class="flex items-center space-x-4">
+                    <button class="text-gray-600 hover:text-brand p-2 transition hidden sm:block">
+                        <i class="ph ph-magnifying-glass text-xl"></i>
+                    </button>
+                    <button onclick="toggleCart()" class="text-gray-600 hover:text-brand p-2 transition relative">
+                        <i class="ph ph-shopping-cart text-xl"></i>
+                        <span id="cart-count" class="absolute top-0 right-0 inline-flex items-center justify-center px-1.5 py-0.5 text-xs font-bold leading-none text-white transform translate-x-1/4 -translate-y-1/4 bg-brand-green rounded-full opacity-0 transition-opacity">0</span>
+                    </button>
+                    <button class="md:hidden text-gray-600 p-2" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
+                        <i class="ph ph-list text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-gray-100 absolute w-full shadow-lg">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#home" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-brand hover:bg-brand-light">Home</a>
+                <a href="#shop" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-brand hover:bg-brand-light">Shop Products</a>
+                <a href="#benefits" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-brand hover:bg-brand-light">Benefits</a>
+                <a href="#about" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-brand hover:bg-brand-light">Our Story</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative pt-10 pb-20 lg:pt-24 lg:pb-28 overflow-hidden">
+        <div class="absolute inset-0 hero-pattern z-0"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="text-center lg:text-left fade-in">
+                    <span class="inline-block px-4 py-1.5 rounded-full bg-brand-light text-brand-dark text-sm font-semibold tracking-wide mb-6 border border-brand/20">
+                        🌱 100% Natural & Preservative Free
+                    </span>
+                    <h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight mb-6">
+                        Pure Energy from <br> <span class="text-brand">Indian Tradition</span>
+                    </h1>
+                    <p class="text-lg text-gray-600 mb-8 max-w-lg mx-auto lg:mx-0 leading-relaxed">
+                        Authentic roasted gram flour (Sattu) sourced from the finest farms. The ultimate superfood for muscle building, digestion, and instant cooling energy.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                        <a href="#shop" class="inline-flex justify-center items-center px-8 py-4 border border-transparent text-base font-semibold rounded-xl text-white bg-brand-green hover:bg-opacity-90 shadow-lg hover:shadow-xl transition transform hover:-translate-y-0.5">
+                            Order Now <i class="ph-bold ph-arrow-right ml-2"></i>
+                        </a>
+                        <a href="#about" class="inline-flex justify-center items-center px-8 py-4 border border-gray-300 text-base font-semibold rounded-xl text-gray-700 bg-white hover:bg-gray-50 shadow-sm transition">
+                            Learn More
+                        </a>
+                    </div>
+                    
+                    <div class="mt-8 flex items-center justify-center lg:justify-start gap-6 text-sm text-gray-500 font-medium">
+                        <div class="flex items-center"><i class="ph-fill ph-seal-check text-brand-green mr-1 text-lg"></i> FSSAI Certified</div>
+                        <div class="flex items-center"><i class="ph-fill ph-plant text-brand-green mr-1 text-lg"></i> 100% Vegan</div>
+                        <div class="flex items-center"><i class="ph-fill ph-star text-brand-accent mr-1 text-lg"></i> 4.8/5 Rating</div>
+                    </div>
+                </div>
+                
+                <div class="relative lg:block fade-in" style="animation-delay: 0.2s;">
+                    <!-- Placeholder for Product Hero Shot -->
+                    <div class="relative rounded-3xl overflow-hidden shadow-2xl bg-[#F0EBE0] aspect-square flex items-center justify-center group">
+                         <div class="absolute inset-0 bg-gradient-to-tr from-brand/10 to-transparent"></div>
+                         <img src="https://images.unsplash.com/photo-1610725664285-7c57e6eeac3f?q=80&w=1000&auto=format&fit=crop" alt="Bowl of Sattu Flour" class="w-full h-full object-cover mix-blend-multiply opacity-90 transition duration-700 group-hover:scale-105">
+                         
+                         <!-- Floating Badge -->
+                         <div class="absolute bottom-6 right-6 bg-white p-4 rounded-2xl shadow-xl flex items-center gap-3 animate-bounce" style="animation-duration: 3s;">
+                            <div class="bg-green-100 p-2 rounded-full">
+                                <i class="ph-fill ph-lightning text-green-600 text-xl"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs text-gray-500 font-bold uppercase">High Protein</p>
+                                <p class="text-sm font-bold text-gray-800">20g per 100g</p>
+                            </div>
+                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Signals -->
+    <section class="py-10 border-y border-gray-200 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                <div class="flex flex-col items-center">
+                    <i class="ph-duotone ph-shield-check text-4xl text-brand mb-2"></i>
+                    <h3 class="font-bold text-gray-800">FSSAI Certified</h3>
+                    <p class="text-xs text-gray-500">Safe & Hygienic</p>
+                </div>
+                <div class="flex flex-col items-center">
+                    <i class="ph-duotone ph-plant text-4xl text-brand-green mb-2"></i>
+                    <h3 class="font-bold text-gray-800">100% Natural</h3>
+                    <p class="text-xs text-gray-500">No Preservatives</p>
+                </div>
+                <div class="flex flex-col items-center">
+                    <i class="ph-duotone ph-flag text-4xl text-orange-500 mb-2"></i>
+                    <h3 class="font-bold text-gray-800">Made in India</h3>
+                    <p class="text-xs text-gray-500">Sourced Locally</p>
+                </div>
+                <div class="flex flex-col items-center">
+                    <i class="ph-duotone ph-truck text-4xl text-blue-500 mb-2"></i>
+                    <h3 class="font-bold text-gray-800">Fast Delivery</h3>
+                    <p class="text-xs text-gray-500">Pan India Shipping</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Shop Section -->
+    <section id="shop" class="py-20 bg-brand-light">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="font-serif text-3xl md:text-4xl font-bold text-brand-dark mb-4">Our Premium Collection</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Stone-ground, roasted to perfection. Choose the pack that suits your needs.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                
+                <!-- Product 1: 1kg -->
+                <div class="bg-white rounded-2xl shadow-sm hover:shadow-xl transition duration-300 overflow-hidden group border border-gray-100 flex flex-col">
+                    <div class="relative h-64 bg-[#F5F5F5] overflow-hidden">
+                        <span class="absolute top-4 left-4 bg-red-500 text-white text-xs font-bold px-3 py-1 rounded-full z-10">BEST SELLER</span>
+                        <img src="https://via.placeholder.com/600x600/e8dcc6/5d3a1a?text=Shudhh+Sattu+1KG" alt="Shudhh Sattu 1kg" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col">
+                        <div class="mb-2">
+                            <span class="text-xs font-bold text-brand uppercase tracking-wider">Super Saver Pack</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-1">Shudhh Sattu - 1kg</h3>
+                        <div class="flex items-center mb-4">
+                            <div class="flex text-brand-accent text-sm">
+                                <i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i>
+                            </div>
+                            <span class="text-xs text-gray-400 ml-2">(1,240 Reviews)</span>
+                        </div>
+                        <ul class="text-sm text-gray-600 mb-4 space-y-1">
+                            <li>• High Protein & Fiber</li>
+                            <li>• Gluten Free</li>
+                            <li>• Summer Coolant</li>
+                        </ul>
+                        <div class="mt-auto flex items-center justify-between">
+                            <div>
+                                <span class="text-2xl font-bold text-gray-900">₹140</span>
+                                <span class="text-sm text-gray-400 line-through ml-1">₹180</span>
+                                <span class="text-xs text-green-600 font-bold block">22% OFF</span>
+                            </div>
+                            <button onclick="addToCart(1)" class="bg-brand-green text-white px-6 py-2.5 rounded-lg font-semibold hover:bg-green-800 transition shadow-lg shadow-green-100 active:scale-95">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 2: 500g -->
+                <div class="bg-white rounded-2xl shadow-sm hover:shadow-xl transition duration-300 overflow-hidden group border border-gray-100 flex flex-col">
+                    <div class="relative h-64 bg-[#F5F5F5] overflow-hidden">
+                        <span class="absolute top-4 left-4 bg-brand text-white text-xs font-bold px-3 py-1 rounded-full z-10">TRIAL PACK</span>
+                        <img src="https://via.placeholder.com/600x600/e8dcc6/5d3a1a?text=Shudhh+Sattu+500g" alt="Shudhh Sattu 500g" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col">
+                        <div class="mb-2">
+                            <span class="text-xs font-bold text-brand uppercase tracking-wider">Standard Pack</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-1">Shudhh Sattu - 500g</h3>
+                        <div class="flex items-center mb-4">
+                            <div class="flex text-brand-accent text-sm">
+                                <i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star-half"></i>
+                            </div>
+                            <span class="text-xs text-gray-400 ml-2">(850 Reviews)</span>
+                        </div>
+                        <ul class="text-sm text-gray-600 mb-4 space-y-1">
+                            <li>• Perfect for Travel</li>
+                            <li>• Freshly Roasted</li>
+                            <li>• Zip Lock Packaging</li>
+                        </ul>
+                        <div class="mt-auto flex items-center justify-between">
+                            <div>
+                                <span class="text-2xl font-bold text-gray-900">₹75</span>
+                                <span class="text-sm text-gray-400 line-through ml-1">₹99</span>
+                                <span class="text-xs text-green-600 font-bold block">24% OFF</span>
+                            </div>
+                            <button onclick="addToCart(2)" class="bg-brand-green text-white px-6 py-2.5 rounded-lg font-semibold hover:bg-green-800 transition shadow-lg shadow-green-100 active:scale-95">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section id="benefits" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <span class="text-brand font-bold tracking-widest text-sm uppercase">Why Choose Sattu?</span>
+                <h2 class="font-serif text-3xl font-bold text-brand-dark mt-2">The Indian Superfood</h2>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                <!-- Benefit 1 -->
+                <div class="text-center p-6 rounded-2xl bg-brand-light/50 border border-transparent hover:border-brand/20 transition">
+                    <div class="w-16 h-16 mx-auto bg-white rounded-full flex items-center justify-center shadow-md mb-6">
+                        <i class="ph-fill ph-barbell text-3xl text-brand"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Powerhouse of Protein</h3>
+                    <p class="text-gray-600">Great for muscle repair and growth. A natural protein shake alternative for gym-goers.</p>
+                </div>
+                <!-- Benefit 2 -->
+                <div class="text-center p-6 rounded-2xl bg-brand-light/50 border border-transparent hover:border-brand/20 transition">
+                    <div class="w-16 h-16 mx-auto bg-white rounded-full flex items-center justify-center shadow-md mb-6">
+                        <i class="ph-fill ph-drop text-3xl text-blue-500"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Natural Coolant</h3>
+                    <p class="text-gray-600">Keeps the body cool and hydrated during harsh summers. The perfect energy drink.</p>
+                </div>
+                <!-- Benefit 3 -->
+                <div class="text-center p-6 rounded-2xl bg-brand-light/50 border border-transparent hover:border-brand/20 transition">
+                    <div class="w-16 h-16 mx-auto bg-white rounded-full flex items-center justify-center shadow-md mb-6">
+                        <i class="ph-fill ph-heartbeat text-3xl text-red-500"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Gut Friendly</h3>
+                    <p class="text-gray-600">High insoluble fiber content helps in digestion and cleanses the colon effectively.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How to Use Section -->
+    <section class="py-20 bg-brand-dark text-white relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/food.png')]"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <h2 class="font-serif text-3xl md:text-4xl font-bold text-center mb-12">How to Enjoy Shudhh Sattu</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white/10 backdrop-blur-sm p-6 rounded-xl border border-white/10 hover:bg-white/20 transition">
+                    <h3 class="text-xl font-bold mb-2 text-brand-accent">Sattu Sharbat</h3>
+                    <p class="text-gray-300 text-sm mb-4">Mix with water, black salt, lemon, and roasted cumin powder.</p>
+                    <div class="text-xs font-bold uppercase tracking-wider text-gray-400">Time: 2 Mins</div>
+                </div>
+                <div class="bg-white/10 backdrop-blur-sm p-6 rounded-xl border border-white/10 hover:bg-white/20 transition">
+                    <h3 class="text-xl font-bold mb-2 text-brand-accent">Sattu Paratha</h3>
+                    <p class="text-gray-300 text-sm mb-4">Stuff spiced sattu mix into dough balls and cook with ghee.</p>
+                    <div class="text-xs font-bold uppercase tracking-wider text-gray-400">Time: 20 Mins</div>
+                </div>
+                <div class="bg-white/10 backdrop-blur-sm p-6 rounded-xl border border-white/10 hover:bg-white/20 transition">
+                    <h3 class="text-xl font-bold mb-2 text-brand-accent">Protein Laddoo</h3>
+                    <p class="text-gray-300 text-sm mb-4">Mix with jaggery and ghee for a healthy sweet treat.</p>
+                    <div class="text-xs font-bold uppercase tracking-wider text-gray-400">Time: 15 Mins</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Us / Story -->
+    <section id="about" class="py-20 bg-[#FDFBF7]">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row items-center gap-12">
+                <div class="w-full md:w-1/2">
+                    <img src="https://images.unsplash.com/photo-1599579766589-29158e658925?q=80&w=800&auto=format&fit=crop" alt="Farmers in field" class="rounded-2xl shadow-xl w-full h-auto object-cover">
+                </div>
+                <div class="w-full md:w-1/2">
+                    <h2 class="font-serif text-3xl font-bold text-brand-dark mb-6">The Shudhh Promise</h2>
+                    <p class="text-gray-600 mb-4 leading-relaxed">
+                        Shudhh Sattu was born from a simple desire: to bring the authentic taste of rural India to modern households. We partner directly with farmers in Bihar and UP to source the best gram (chana).
+                    </p>
+                    <p class="text-gray-600 mb-6 leading-relaxed">
+                        Unlike commercial brands, we use the traditional sand-roasting method which preserves nutrients and gives our Sattu that distinct smoky aroma. No additives, no fillers--just pure goodness.
+                    </p>
+                    <button class="text-brand font-bold border-b-2 border-brand pb-1 hover:text-brand-dark transition">Read Our Full Story</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-16 bg-white">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="font-serif text-3xl font-bold text-center text-brand-dark mb-10">Frequently Asked Questions</h2>
+            <div class="space-y-4">
+                <details class="group p-4 bg-gray-50 rounded-lg open:bg-brand-light transition">
+                    <summary class="flex cursor-pointer justify-between items-center font-medium text-gray-900">
+                        <span>Is this suitable for weight loss?</span>
+                        <span class="transition group-open:rotate-180"><i class="ph-bold ph-caret-down"></i></span>
+                    </summary>
+                    <p class="text-gray-600 mt-4 text-sm leading-relaxed">
+                        Yes! Sattu is low in glycemic index and high in fiber, keeping you full for longer and boosting metabolism.
+                    </p>
+                </details>
+                <details class="group p-4 bg-gray-50 rounded-lg open:bg-brand-light transition">
+                    <summary class="flex cursor-pointer justify-between items-center font-medium text-gray-900">
+                        <span>What is the shelf life?</span>
+                        <span class="transition group-open:rotate-180"><i class="ph-bold ph-caret-down"></i></span>
+                    </summary>
+                    <p class="text-gray-600 mt-4 text-sm leading-relaxed">
+                        Shudhh Sattu is best consumed within 6 months of manufacturing. Store in an airtight container in a cool, dry place.
+                    </p>
+                </details>
+                <details class="group p-4 bg-gray-50 rounded-lg open:bg-brand-light transition">
+                    <summary class="flex cursor-pointer justify-between items-center font-medium text-gray-900">
+                        <span>Do you offer Cash on Delivery?</span>
+                        <span class="transition group-open:rotate-180"><i class="ph-bold ph-caret-down"></i></span>
+                    </summary>
+                    <p class="text-gray-600 mt-4 text-sm leading-relaxed">
+                        Yes, Cash on Delivery (COD) is available on all orders across India.
+                    </p>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" class="bg-gray-900 text-white pt-16 pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 border-b border-gray-800 pb-12">
+                <!-- Brand -->
+                <div class="col-span-1 md:col-span-1">
+                    <h2 class="font-serif text-2xl font-bold text-white mb-4">Shudhh<span class="text-brand-green">Sattu</span></h2>
+                    <p class="text-gray-400 text-sm mb-6">Bringing the purity of traditional Indian superfoods to your doorstep.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition"><i class="ph-fill ph-instagram-logo text-2xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition"><i class="ph-fill ph-facebook-logo text-2xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition"><i class="ph-fill ph-whatsapp-logo text-2xl"></i></a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Quick Links</h3>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#shop" class="hover:text-brand-accent transition">Shop Now</a></li>
+                        <li><a href="#about" class="hover:text-brand-accent transition">About Us</a></li>
+                        <li><a href="#" class="hover:text-brand-accent transition">Bulk Orders</a></li>
+                        <li><a href="#" class="hover:text-brand-accent transition">Track Order</a></li>
+                    </ul>
+                </div>
+
+                <!-- Policies -->
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Policies</h3>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-brand-accent transition">Privacy Policy</a></li>
+                        <li><a href="#" class="hover:text-brand-accent transition">Terms of Service</a></li>
+                        <li><a href="#" class="hover:text-brand-accent transition">Refund Policy</a></li>
+                        <li><a href="#" class="hover:text-brand-accent transition">Shipping Policy</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact -->
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Contact Us</h3>
+                    <ul class="space-y-3 text-sm text-gray-400">
+                        <li class="flex items-start"><i class="ph-fill ph-map-pin mr-2 mt-0.5"></i> 123, Food Park, Patna, Bihar - 800001</li>
+                        <li class="flex items-center"><i class="ph-fill ph-envelope mr-2"></i> hello@shudhhsattu.com</li>
+                        <li class="flex items-center"><i class="ph-fill ph-phone mr-2"></i> +91 98765 43210</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="pt-8 text-center text-gray-500 text-sm flex flex-col md:flex-row justify-between items-center">
+                <p>&copy; 2023 Shudhh Sattu. All rights reserved.</p>
+                <div class="flex items-center gap-2 mt-4 md:mt-0">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/MasterCard_Logo.svg/1280px-MasterCard_Logo.svg.png" class="h-6 opacity-70" alt="Mastercard">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Visa.svg/1200px-Visa.svg.png" class="h-4 opacity-70" alt="Visa">
+                    <span class="text-xs border border-gray-600 px-1 rounded text-gray-400">UPI</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Cart Modal (Slide over) -->
+    <div id="cart-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-[60] hidden transition-opacity opacity-0" onclick="toggleCart()"></div>
+    <div id="cart-drawer" class="fixed inset-y-0 right-0 max-w-md w-full bg-white shadow-2xl z-[70] transform translate-x-full transition-transform duration-300 flex flex-col">
+        <div class="flex items-center justify-between p-5 border-b border-gray-100">
+            <h2 class="text-xl font-bold font-serif text-brand-dark">Your Cart</h2>
+            <button onclick="toggleCart()" class="text-gray-500 hover:text-red-500 transition">
+                <i class="ph ph-x text-2xl"></i>
+            </button>
+        </div>
+        
+        <div id="cart-items" class="flex-1 overflow-y-auto p-5 space-y-4">
+            <!-- Cart items will be injected here -->
+            <div class="text-center py-20 text-gray-400">
+                <i class="ph-duotone ph-basket text-6xl mb-4"></i>
+                <p>Your cart is empty.</p>
+                <button onclick="toggleCart()" class="mt-4 text-brand font-bold text-sm">Start Shopping</button>
+            </div>
+        </div>
+
+        <div class="p-5 border-t border-gray-100 bg-gray-50">
+            <div class="flex justify-between mb-2 text-gray-600">
+                <span>Subtotal</span>
+                <span id="cart-subtotal">₹0</span>
+            </div>
+            <div class="flex justify-between mb-4 text-lg font-bold text-gray-900">
+                <span>Total</span>
+                <span id="cart-total">₹0</span>
+            </div>
+            <button onclick="checkout()" class="w-full bg-brand-green text-white py-3.5 rounded-xl font-bold hover:bg-green-800 transition shadow-lg flex justify-center items-center">
+                Checkout Now
+            </button>
+            <p class="text-xs text-center mt-3 text-gray-500"><i class="ph-fill ph-lock-key mr-1"></i> Secure Checkout</p>
+        </div>
+    </div>
+
+    <!-- Checkout Modal -->
+    <div id="checkout-modal" class="fixed inset-0 bg-black bg-opacity-70 z-[80] hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto relative p-6">
+            <button onclick="closeCheckout()" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800"><i class="ph ph-x text-xl"></i></button>
+            
+            <div id="checkout-form-content">
+                <h2 class="text-2xl font-serif font-bold text-brand-dark mb-6">Secure Checkout</h2>
+                
+                <form id="order-form" onsubmit="processOrder(event)" class="space-y-4">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-gray-700 uppercase mb-1">First Name</label>
+                            <input type="text" required class="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand focus:border-transparent outline-none transition">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Last Name</label>
+                            <input type="text" required class="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand focus:border-transparent outline-none transition">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Phone Number</label>
+                        <input type="tel" required pattern="[0-9]{10}" class="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand focus:border-transparent outline-none transition">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Address</label>
+                        <textarea required rows="3" class="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand focus:border-transparent outline-none transition"></textarea>
+                    </div>
+                    
+                    <div class="pt-4 border-t border-gray-100">
+                        <label class="block text-xs font-bold text-gray-700 uppercase mb-2">Payment Method</label>
+                        <div class="grid grid-cols-2 gap-3">
+                            <label class="border p-3 rounded-lg flex items-center gap-2 cursor-pointer has-[:checked]:border-brand has-[:checked]:bg-brand-light">
+                                <input type="radio" name="payment" value="cod" checked class="accent-brand">
+                                <span class="text-sm font-medium">Cash on Delivery</span>
+                            </label>
+                            <label class="border p-3 rounded-lg flex items-center gap-2 cursor-pointer has-[:checked]:border-brand has-[:checked]:bg-brand-light">
+                                <input type="radio" name="payment" value="upi" class="accent-brand">
+                                <span class="text-sm font-medium">UPI / Online</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="w-full mt-6 bg-brand text-white py-3.5 rounded-xl font-bold hover:bg-brand-dark transition shadow-lg">
+                        Confirm Order
+                    </button>
+                </form>
+            </div>
+
+            <!-- Success State -->
+            <div id="order-success" class="hidden text-center py-10">
+                <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <i class="ph-fill ph-check text-4xl text-green-600"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-gray-900 mb-2">Order Placed!</h2>
+                <p class="text-gray-600 mb-6">Thank you for choosing Shudhh Sattu. Your order ID is <span class="font-mono font-bold text-brand">#SS9821</span></p>
+                <button onclick="location.reload()" class="bg-brand-dark text-white px-8 py-3 rounded-lg font-medium">Continue Shopping</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-5 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white px-6 py-3 rounded-lg shadow-2xl flex items-center gap-3 transition-all duration-300 translate-y-24 opacity-0 z-[100]">
+        <i class="ph-fill ph-check-circle text-brand-green text-xl"></i>
+        <span class="font-medium">Added to Cart!</span>
+    </div>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // Data
+        const products = [
+            {
+                id: 1,
+                name: "Shudhh Sattu - 1kg",
+                price: 140,
+                image: "https://via.placeholder.com/100x100/e8dcc6/5d3a1a?text=1KG",
+                desc: "1kg High Protein Pack"
+            },
+            {
+                id: 2,
+                name: "Shudhh Sattu - 500g",
+                price: 75,
+                image: "https://via.placeholder.com/100x100/e8dcc6/5d3a1a?text=500g",
+                desc: "500g Trial Pack"
+            }
+        ];
+
+        let cart = [];
+
+        // Add to Cart
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            const existingItem = cart.find(item => item.id === productId);
+
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({ ...product, quantity: 1 });
+            }
+
+            updateCartUI();
+            showToast(`Added ${product.name}`);
+        }
+
+        // Remove from Cart
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            updateCartUI();
+        }
+
+        // Change Quantity
+        function changeQty(productId, change) {
+            const item = cart.find(i => i.id === productId);
+            if (item) {
+                item.quantity += change;
+                if (item.quantity <= 0) {
+                    removeFromCart(productId);
+                } else {
+                    updateCartUI();
+                }
+            }
+        }
+
+        // Update UI
+        function updateCartUI() {
+            // Update Badge
+            const totalQty = cart.reduce((sum, item) => sum + item.quantity, 0);
+            const cartCount = document.getElementById('cart-count');
+            cartCount.innerText = totalQty;
+            cartCount.classList.toggle('opacity-0', totalQty === 0);
+
+            // Update List
+            const cartItemsContainer = document.getElementById('cart-items');
+            
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = `
+                    <div class="text-center py-20 text-gray-400">
+                        <i class="ph-duotone ph-basket text-6xl mb-4"></i>
+                        <p>Your cart is empty.</p>
+                        <button onclick="toggleCart()" class="mt-4 text-brand font-bold text-sm">Start Shopping</button>
+                    </div>`;
+            } else {
+                cartItemsContainer.innerHTML = cart.map(item => `
+                    <div class="flex gap-4 items-center">
+                        <img src="${item.image}" class="w-16 h-16 rounded-md object-cover border border-gray-200">
+                        <div class="flex-1">
+                            <h4 class="text-sm font-bold text-gray-900">${item.name}</h4>
+                            <p class="text-xs text-gray-500 mb-1">₹${item.price} x ${item.quantity}</p>
+                            <div class="flex items-center gap-3">
+                                <div class="flex items-center border border-gray-300 rounded">
+                                    <button onclick="changeQty(${item.id}, -1)" class="px-2 py-0.5 text-gray-600 hover:bg-gray-100">-</button>
+                                    <span class="px-2 text-xs font-bold">${item.quantity}</span>
+                                    <button onclick="changeQty(${item.id}, 1)" class="px-2 py-0.5 text-gray-600 hover:bg-gray-100">+</button>
+                                </div>
+                                <button onclick="removeFromCart(${item.id})" class="text-xs text-red-500 underline">Remove</button>
+                            </div>
+                        </div>
+                        <div class="font-bold text-gray-900">₹${item.price * item.quantity}</div>
+                    </div>
+                `).join('');
+            }
+
+            // Update Totals
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            document.getElementById('cart-subtotal').innerText = `₹${total}`;
+            document.getElementById('cart-total').innerText = `₹${total}`;
+        }
+
+        // Toggle Cart Drawer
+        function toggleCart() {
+            const overlay = document.getElementById('cart-overlay');
+            const drawer = document.getElementById('cart-drawer');
+            
+            if (drawer.classList.contains('translate-x-full')) {
+                // Open
+                overlay.classList.remove('hidden');
+                // timeout to allow display:block to apply before opacity transition
+                setTimeout(() => overlay.classList.remove('opacity-0'), 10);
+                drawer.classList.remove('translate-x-full');
+            } else {
+                // Close
+                drawer.classList.add('translate-x-full');
+                overlay.classList.add('opacity-0');
+                setTimeout(() => overlay.classList.add('hidden'), 300);
+            }
+        }
+
+        // Checkout Functions
+        function checkout() {
+            if (cart.length === 0) return;
+            toggleCart(); // Close drawer
+            document.getElementById('checkout-modal').classList.remove('hidden');
+        }
+
+        function closeCheckout() {
+            document.getElementById('checkout-modal').classList.add('hidden');
+        }
+
+        function processOrder(e) {
+            e.preventDefault();
+            const btn = e.target.querySelector('button[type="submit"]');
+            const originalText = btn.innerText;
+            
+            // Loading State
+            btn.innerHTML = '<div class="loader mx-auto"></div>';
+            btn.disabled = true;
+
+            // Simulate API call
+            setTimeout(() => {
+                document.getElementById('checkout-form-content').classList.add('hidden');
+                document.getElementById('order-success').classList.remove('hidden');
+                cart = [];
+                updateCartUI();
+            }, 1500);
+        }
+
+        // Utilities
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.querySelector('span').innerText = message;
+            toast.classList.remove('translate-y-24', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-24', 'opacity-0');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
